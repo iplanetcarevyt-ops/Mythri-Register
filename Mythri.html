@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mythri Services Insurance</title>
+  <script src="data.js"></script>
+  <style>
+    :root {
+      --ink: #171717;
+      --muted: #62666c;
+      --line: #ded9d1;
+      --paper: #f5f1ea;
+      --panel: #ffffff;
+      --orange: #ff8a00;
+      --orange-dark: #d66d00;
+      --green: #18745b;
+      --green-dark: #105240;
+      --blue: #1f5f99;
+      --red: #b44545;
+      --amber: #9f6b20;
+      --shadow: 0 18px 42px rgba(23, 23, 23, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, #fff8ef 0, var(--paper) 210px),
+        var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e8ded0;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .bar {
+      align-items: center;
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1440px;
+      padding: 14px 22px;
+    }
+
+    .brand {
+      align-items: center;
+      display: flex;
+      gap: 18px;
+      min-width: 280px;
+    }
+
+    .brand-logo {
+      align-items: center;
+      background: #fff;
+      border: 1px solid #eee2d2;
+      border-radius: 8px;
+      display: flex;
+      height: 62px;
+      justify-content: center;
+      padding: 8px 12px;
+      width: 238px;
+    }
+
+    .brand-logo img {
+      display: block;
+      height: auto;
+      max-height: 44px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    h1 {
+      font-size: 22px;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .location-pill {
+      align-self: flex-start;
+      background: #171717;
+      border-radius: 999px;
+      color: #fff;
+      display: inline-flex;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      padding: 6px 9px;
+      text-transform: uppercase;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      align-items: center;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 6px;
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      gap: 8px;
+      min-height: 36px;
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+
+    button:hover { border-color: #aebbc5; }
+    button.primary { background: var(--orange); border-color: var(--orange); color: #1a1309; font-weight: 800; }
+    button.primary:hover { background: var(--orange-dark); border-color: var(--orange-dark); color: #fff; }
+    button.danger { color: var(--red); }
+
+    main {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 340px minmax(0, 1fr);
+      margin: 0 auto;
+      max-width: 1440px;
+      padding: 22px 22px 30px;
+    }
+
+    .left, .right {
+      min-width: 0;
+    }
+
+    .metrics {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      background: var(--panel);
+      border: 1px solid #ebe0d2;
+      border-radius: 8px;
+      padding: 15px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 5px;
+    }
+
+    .form-panel, .table-panel {
+      background: var(--panel);
+      border: 1px solid #e8ddd0;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .panel-head {
+      align-items: center;
+      border-bottom: 1px solid #e8ddd0;
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      padding: 14px;
+    }
+
+    .panel-head h2 {
+      font-size: 15px;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .panel-note {
+      border-bottom: 1px solid #e8ddd0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.45;
+      padding: 10px 14px 0;
+    }
+
+    .form-message {
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 800;
+      min-height: 16px;
+    }
+
+    .store-tabs {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: 12px 14px 0;
+    }
+
+    .store-tabs button {
+      justify-content: center;
+      min-width: 0;
+      padding-inline: 6px;
+    }
+
+    .store-tabs button.active {
+      background: #e8f2ee;
+      border-color: #92b6aa;
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    label {
+      color: #34302c;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      background: #fff;
+      border: 1px solid #ddd2c4;
+      border-radius: 6px;
+      color: var(--ink);
+      min-height: 36px;
+      padding: 8px 10px;
+      width: 100%;
+    }
+
+    .status-select {
+      min-width: 190px;
+    }
+
+    textarea {
+      min-height: 76px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255, 138, 0, 0.18);
+      outline: 0;
+    }
+
+    .form-actions {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .toolbar {
+      align-items: center;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: minmax(180px, 1fr) 160px;
+      padding: 14px;
+    }
+
+    #storeTabs, #storeFilter {
+      display: none;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      padding: 0 14px 14px;
+      max-height: calc(100vh - 258px);
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 1100px;
+      width: 100%;
+    }
+
+    th, td {
+      border-bottom: 1px solid #e9dfd3;
+      max-width: 260px;
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #171717;
+      color: #fff;
+      font-size: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    td[contenteditable="true"] {
+      background: #fff;
+      outline: 0;
+    }
+
+    td[contenteditable="true"]:focus {
+      box-shadow: inset 0 0 0 2px rgba(255, 138, 0, 0.45);
+    }
+
+    .row-actions {
+      text-align: right;
+      width: 76px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 8px;
+      white-space: nowrap;
+    }
+
+    .chip.ok { background: #e5f2ec; color: var(--green-dark); }
+    .chip.warn { background: #fff0d8; color: #9d5700; }
+    .chip.bad { background: #fae7e7; color: var(--red); }
+
+    .empty {
+      color: var(--muted);
+      padding: 38px 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .bar { align-items: flex-start; flex-direction: column; }
+      .brand { align-items: flex-start; flex-direction: column; }
+      .actions { justify-content: flex-start; width: 100%; }
+      main { grid-template-columns: 1fr; padding-inline: 14px; }
+      .toolbar { grid-template-columns: 1fr; }
+      .table-wrap { max-height: none; }
+    }
+
+    @media (max-width: 560px) {
+      .metrics { grid-template-columns: 1fr; }
+      .store-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .form-actions { grid-template-columns: 1fr; }
+      button { width: 100%; justify-content: center; }
+      .actions { display: grid; grid-template-columns: 1fr; }
+      .brand-logo { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="iplanet-care-logo.png" alt="iPlanet Care">
+        </div>
+        <div class="brand-copy">
+          <span class="location-pill">Insurance Case Register</span>
+          <h1>Mythri Services Insurance</h1>
+          <span class="subtitle">iPlanet Care, Kochi - VYT2</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="exportXlsx" class="primary" type="button">Download Excel</button>
+        <button id="exportCsv" type="button">Download CSV</button>
+        <button id="resetData" class="danger" type="button">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="left">
+      <div class="metrics" id="metrics"></div>
+      <div class="form-panel">
+        <div class="panel-head">
+          <h2 id="formTitle">New Record</h2>
+        </div>
+        <div class="panel-note">Enter the available details at each process stage. Saving again with the same Case ID, Serial Number, IMEI, or Repair ID updates the existing table row.</div>
+        <div class="store-tabs" id="storeTabs"></div>
+        <form id="recordForm"></form>
+      </div>
+    </section>
+
+    <section class="right table-panel">
+      <div class="panel-head">
+        <h2 id="tableTitle">Records</h2>
+      </div>
+      <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="Search case, serial, repair ID">
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="diagnosis pending">Diagnosis Pending</option>
+          <option value="estimate submitted">Estimate Submitted</option>
+          <option value="estimate approved">Estimate Approved</option>
+          <option value="repair initiated">Repair Initiated</option>
+          <option value="repair completed">Repair Completed</option>
+          <option value="invoice completed">Invoice Completed</option>
+          <option value="payment pending">Payment Pending</option>
+          <option value="payment received">Payment Received</option>
+          <option value="ready for pickup">Ready for Pickup</option>
+          <option value="device delivered">Device Delivered</option>
+          <option value="estimate rejected">Estimate Rejected</option>
+        </select>
+        <select id="storeFilter"></select>
+      </div>
+      <div class="table-wrap" id="tableWrap"></div>
+    </section>
+  </main>
+
+  <script>
+    const storageKey = "vytilla-services-records-v2-20260623";
+    const storeNames = Object.keys(window.MYTHRI_INITIAL_DATA || {});
+    const fieldOrder = ["Date", "Case ID", "Customer Name", "Serial Number", "IMEI", "Mode of Submission", "Estimation Amount", "Repair ID", "Repair Status", "Remarks"];
+    const removedFields = new Set(["Invoice Status", "Payment Status", "Delivery Ststaus", "Delivery Status"]);
+    const statusOptions = [
+      "Diagnosis Pending",
+      "Estimate Submitted",
+      "Estimate Approved",
+      "Repair Initiated",
+      "Repair Completed",
+      "Invoice Completed",
+      "Payment Pending",
+      "Payment Received",
+      "Ready for Pickup",
+      "Device Delivered",
+      "Estimate Rejected"
+    ];
+    const legacyStatusMap = {
+      Approved: "Estimate Approved",
+      Completed: "Repair Completed",
+      Received: "Payment Received",
+      Rejected: "Estimate Rejected"
+    };
+    const dateFields = new Set(["RECEIVE DATE", "ESTIMATION DATE", "APPROVAL DATE", "RFPU DATE", "PAYMENT DATE", "Date"]);
+    const amountFields = new Set(["ESTIMATION AMOUNT", "INVOICE AMOUNT", "Estimation Amount", "DISCOUNT"]);
+    const longFields = new Set(["DISCRIPTION", "REPORTED ISSUE", "Remarks"]);
+    const caseKeyFields = ["Case ID", "Serial Number", "IMEI", "Repair ID"];
+    const state = {
+      data: loadData(),
+      activeStore: storeNames[0] || "",
+      query: "",
+      status: "",
+      storeView: "active"
+    };
+
+    const tabsEl = document.getElementById("storeTabs");
+    const formEl = document.getElementById("recordForm");
+    const tableWrap = document.getElementById("tableWrap");
+    const metricsEl = document.getElementById("metrics");
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const storeFilter = document.getElementById("storeFilter");
+
+    function loadData() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+        if (saved && typeof saved === "object") return normalizeWorkbookData(saved);
+      } catch (error) {}
+      return normalizeWorkbookData(structuredClone(window.MYTHRI_INITIAL_DATA || {}));
+    }
+
+    function normalizeWorkbookData(workbook) {
+      Object.values(workbook).forEach(sheet => {
+        sheet.headers = fieldOrder.filter(header => !removedFields.has(header));
+        sheet.rows = (sheet.rows || []).map(row => {
+          const next = {};
+          sheet.headers.forEach(header => {
+            next[header] = header === "Repair Status" ? normalizeRepairStatus(row[header]) : row[header] ?? "";
+          });
+          return next;
+        });
+      });
+      return workbook;
+    }
+
+    function normalizeRepairStatus(value) {
+      const text = String(value || "").trim();
+      return legacyStatusMap[text] || text;
+    }
+
+    function saveData() {
+      localStorage.setItem(storageKey, JSON.stringify(state.data));
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+      })[char]);
+    }
+
+    function normalize(value) {
+      return String(value ?? "").trim().toLowerCase();
+    }
+
+    function headersFor(store) {
+      return state.data[store]?.headers || [];
+    }
+
+    function rowsFor(store) {
+      return state.data[store]?.rows || [];
+    }
+
+    function detectInputType(header) {
+      if (dateFields.has(header)) return "date";
+      if (amountFields.has(header)) return "number";
+      return "text";
+    }
+
+    function fieldValue(header) {
+      if (header === "STORE CODE") return state.activeStore;
+      return "";
+    }
+
+    function statusValue(row) {
+      return row["Repair Status"] || "";
+    }
+
+    function statusChip(value) {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      const lower = text.toLowerCase();
+      let className = "warn";
+      if (lower.includes("completed") || lower.includes("approved") || lower.includes("received")) className = "ok";
+      if (lower.includes("rejected") || lower.includes("na")) className = "bad";
+      return `<span class="chip ${className}">${escapeHtml(text)}</span>`;
+    }
+
+    function renderTabs() {
+      tabsEl.innerHTML = "";
+    }
+
+    function renderStoreFilter() {
+      storeFilter.innerHTML = `<option value="active">Vytilla</option>`;
+      storeFilter.value = state.storeView;
+    }
+
+    function renderMetrics() {
+      const allRows = storeNames.flatMap(store => rowsFor(store).map(row => ({ store, row })));
+      const total = allRows.length;
+      const completed = allRows.filter(item => normalize(statusValue(item.row)).includes("completed")).length;
+      const rejected = allRows.filter(item => normalize(statusValue(item.row)).includes("rejected")).length;
+      const inProcess = Math.max(total - completed - rejected, 0);
+      const amount = allRows.reduce((sum, item) => {
+        const raw = item.row["INVOICE AMOUNT"] || item.row["Estimation Amount"] || item.row["ESTIMATION AMOUNT"] || 0;
+        const value = Number(String(raw).replace(/[^0-9.-]/g, ""));
+        return Number.isFinite(value) ? sum + value : sum;
+      }, 0);
+      metricsEl.innerHTML = [
+        metric("Insurance Cases", total),
+        metric("Completed Repairs", completed),
+        metric("In Process", inProcess),
+        metric("Estimated Value", amount.toLocaleString("en-IN", { maximumFractionDigits: 0 }))
+      ].join("");
+    }
+
+    function metric(label, value) {
+      return `<div class="metric"><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`;
+    }
+
+    function renderForm() {
+      const headers = headersFor(state.activeStore);
+      document.getElementById("formTitle").textContent = "Insurance Case Update";
+      const fields = headers.map(header => {
+        const value = fieldValue(header);
+        const type = detectInputType(header);
+        if (header === "Repair Status") {
+          return `<div class="field"><label for="field-${escapeHtml(header)}">${escapeHtml(header)}</label><select id="field-${escapeHtml(header)}" name="${escapeHtml(header)}"><option value=""></option>${statusOptions.map(option => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`).join("")}</select></div>`;
+        }
+        if (longFields.has(header)) {
+          return `<div class="field"><label for="field-${escapeHtml(header)}">${escapeHtml(header)}</label><textarea id="field-${escapeHtml(header)}" name="${escapeHtml(header)}">${escapeHtml(value)}</textarea></div>`;
+        }
+        return `<div class="field"><label for="field-${escapeHtml(header)}">${escapeHtml(header)}</label><input id="field-${escapeHtml(header)}" name="${escapeHtml(header)}" type="${type}" value="${escapeHtml(value)}" ${header === "STORE CODE" ? "readonly" : ""}></div>`;
+      }).join("");
+      formEl.innerHTML = `${fields}<div class="form-message" id="formMessage"></div><div class="form-actions"><button class="primary" type="submit">Save Case Update</button><button type="reset">Clear</button></div>`;
+    }
+
+    function rowsInView() {
+      const stores = [state.activeStore];
+      return stores.flatMap(store => rowsFor(store).map((row, index) => ({ store, row, index })))
+        .filter(item => {
+          const text = normalize(Object.values(item.row).join(" "));
+          const status = normalize(statusValue(item.row));
+          return (!state.query || text.includes(state.query)) && (!state.status || status.includes(state.status));
+        });
+    }
+
+    function renderTable() {
+      const selectedStores = [state.activeStore];
+      const headers = selectedStores.length === 1 ? headersFor(selectedStores[0]) : uniqueHeaders(selectedStores);
+      const rows = rowsInView();
+      document.getElementById("tableTitle").textContent = "Insurance Process Register";
+      if (!rows.length) {
+        tableWrap.innerHTML = `<div class="empty">No records</div>`;
+        return;
+      }
+      tableWrap.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              ${headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}
+              <th class="row-actions">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map(item => `
+              <tr data-store="${escapeHtml(item.store)}" data-index="${item.index}">
+                ${headers.map(header => cell(item, header)).join("")}
+                <td class="row-actions"><button class="danger" type="button" data-delete="${item.index}" data-store="${escapeHtml(item.store)}">Delete</button></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>`;
+    }
+
+    function uniqueHeaders(stores) {
+      const seen = new Set();
+      const headers = [];
+      stores.forEach(store => headersFor(store).forEach(header => {
+        if (!seen.has(header)) {
+          seen.add(header);
+          headers.push(header);
+        }
+      }));
+      return headers;
+    }
+
+    function cell(item, header) {
+      const raw = item.row[header] ?? "";
+      if (header === "Repair Status") return `<td>${statusSelect(raw)}</td>`;
+      return `<td contenteditable="true" data-field="${escapeHtml(header)}">${escapeHtml(raw)}</td>`;
+    }
+
+    function statusSelect(value) {
+      const current = normalizeRepairStatus(value);
+      const options = statusOptions.includes(current) || !current ? statusOptions : [current, ...statusOptions];
+      return `<select class="status-select" data-field="Repair Status">${optionsWithBlank(options, current)}</select>`;
+    }
+
+    function optionsWithBlank(options, current) {
+      return `<option value=""></option>${options.map(option => `<option value="${escapeHtml(option)}" ${option === current ? "selected" : ""}>${escapeHtml(option)}</option>`).join("")}`;
+    }
+
+    function addRecord(event) {
+      event.preventDefault();
+      const row = {};
+      headersFor(state.activeStore).forEach(header => {
+        const field = formEl.elements[header];
+        row[header] = field ? field.value.trim() : "";
+      });
+      if (!Object.values(row).some(Boolean)) return;
+      const rows = rowsFor(state.activeStore);
+      const existingIndex = findExistingCaseIndex(rows, row);
+      let message = "";
+      if (existingIndex >= 0) {
+        headersFor(state.activeStore).forEach(header => {
+          if (String(row[header] ?? "").trim() !== "") rows[existingIndex][header] = row[header];
+        });
+        message = "Existing case updated";
+      } else {
+        rows.push(row);
+        message = "New case added";
+      }
+      saveData();
+      formEl.reset();
+      renderAll();
+      setFormMessage(message);
+    }
+
+    function findExistingCaseIndex(rows, row) {
+      const key = caseKeyFields.find(field => normalize(row[field]));
+      if (!key) return -1;
+      return rows.findIndex(existing => normalize(existing[key]) === normalize(row[key]));
+    }
+
+    function setFormMessage(message) {
+      const target = document.getElementById("formMessage");
+      if (target) target.textContent = message;
+    }
+
+    function editCell(event) {
+      const cellEl = event.target.closest("td[contenteditable='true']");
+      if (!cellEl) return;
+      const tr = cellEl.closest("tr");
+      const store = tr.dataset.store;
+      const index = Number(tr.dataset.index);
+      const field = cellEl.dataset.field;
+      rowsFor(store)[index][field] = cellEl.innerText.trim();
+      saveData();
+      renderMetrics();
+    }
+
+    function updateStatus(event) {
+      const select = event.target.closest(".status-select");
+      if (!select) return;
+      const tr = select.closest("tr");
+      const store = tr.dataset.store;
+      const index = Number(tr.dataset.index);
+      rowsFor(store)[index]["Repair Status"] = select.value;
+      saveData();
+      renderMetrics();
+    }
+
+    function deleteRow(event) {
+      const button = event.target.closest("button[data-delete]");
+      if (!button) return;
+      const store = button.dataset.store;
+      const index = Number(button.dataset.delete);
+      rowsFor(store).splice(index, 1);
+      saveData();
+      renderAll();
+    }
+
+    function resetData() {
+      localStorage.removeItem(storageKey);
+      state.data = structuredClone(window.MYTHRI_INITIAL_DATA || {});
+      renderAll();
+    }
+
+    function downloadCsv() {
+      const headers = headersFor(state.activeStore);
+      const rows = rowsFor(state.activeStore).map(row => headers.map(header => row[header] ?? ""));
+      const csv = [headers, ...rows].map(row => row.map(csvEscape).join(",")).join("\r\n");
+      downloadBlob(new Blob([csv], { type: "text/csv;charset=utf-8" }), `mythri-iplanet-kochi-insurance-${todayStamp()}.csv`);
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? "");
+      return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+    }
+
+    function downloadXlsx() {
+      const files = buildXlsxFiles();
+      const zip = createZip(files);
+      downloadBlob(new Blob([zip], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }), `mythri-iplanet-kochi-insurance-${todayStamp()}.xlsx`);
+    }
+
+    function buildXlsxFiles() {
+      const sheetEntries = storeNames.map((store, idx) => ({ store, id: idx + 1 }));
+      const workbookSheets = sheetEntries.map(s => `<sheet name="${xmlEscape(s.store)}" sheetId="${s.id}" r:id="rId${s.id}"/>`).join("");
+      const workbookRels = sheetEntries.map(s => `<Relationship Id="rId${s.id}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${s.id}.xml"/>`).join("");
+      const overrides = sheetEntries.map(s => `<Override PartName="/xl/worksheets/sheet${s.id}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("");
+      const files = {
+        "[Content_Types].xml": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${overrides}</Types>`,
+        "_rels/.rels": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`,
+        "xl/workbook.xml": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${workbookSheets}</sheets></workbook>`,
+        "xl/_rels/workbook.xml.rels": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${workbookRels}<Relationship Id="rIdStyles" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`,
+        "xl/styles.xml": `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><color theme="1"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF171717"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFill="1" applyFont="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`
+      };
+      sheetEntries.forEach(s => {
+        files[`xl/worksheets/sheet${s.id}.xml`] = worksheetXml(s.store);
+      });
+      return files;
+    }
+
+    function worksheetXml(store) {
+      const headers = headersFor(store);
+      const rows = rowsFor(store);
+      const table = [headers, ...rows.map(row => headers.map(header => row[header] ?? ""))];
+      const xmlRows = table.map((row, rIdx) => `<row r="${rIdx + 1}">${row.map((value, cIdx) => cellXml(value, cIdx, rIdx)).join("")}</row>`).join("");
+      const cols = headers.map((header, idx) => `<col min="${idx + 1}" max="${idx + 1}" width="${Math.min(Math.max(String(header).length + 6, 14), 28)}" customWidth="1"/>`).join("");
+      return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><cols>${cols}</cols><sheetData>${xmlRows}</sheetData><autoFilter ref="A1:${columnName(headers.length)}${Math.max(rows.length + 1, 1)}"/><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews></worksheet>`;
+    }
+
+    function cellXml(value, columnIndex, rowIndex) {
+      const ref = `${columnName(columnIndex + 1)}${rowIndex + 1}`;
+      if (rowIndex === 0) return `<c r="${ref}" t="inlineStr" s="1"><is><t>${xmlEscape(value)}</t></is></c>`;
+      const text = String(value ?? "");
+      const numeric = text !== "" && /^-?\d+(\.\d+)?$/.test(text);
+      if (numeric) return `<c r="${ref}"><v>${text}</v></c>`;
+      return `<c r="${ref}" t="inlineStr"><is><t>${xmlEscape(text)}</t></is></c>`;
+    }
+
+    function columnName(num) {
+      let name = "";
+      while (num > 0) {
+        const rem = (num - 1) % 26;
+        name = String.fromCharCode(65 + rem) + name;
+        num = Math.floor((num - 1) / 26);
+      }
+      return name;
+    }
+
+    function xmlEscape(value) {
+      return String(value ?? "").replace(/[<>&'"]/g, char => ({
+        "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", "\"": "&quot;"
+      })[char]);
+    }
+
+    function createZip(files) {
+      const encoder = new TextEncoder();
+      const chunks = [];
+      const central = [];
+      let offset = 0;
+      Object.entries(files).forEach(([name, content]) => {
+        const nameBytes = encoder.encode(name);
+        const data = encoder.encode(content);
+        const crc = crc32(data);
+        const local = concatBytes([
+          u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc),
+          u32(data.length), u32(data.length), u16(nameBytes.length), u16(0), nameBytes, data
+        ]);
+        chunks.push(local);
+        central.push(concatBytes([
+          u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc),
+          u32(data.length), u32(data.length), u16(nameBytes.length), u16(0), u16(0), u16(0), u16(0),
+          u32(0), u32(offset), nameBytes
+        ]));
+        offset += local.length;
+      });
+      const centralSize = central.reduce((sum, part) => sum + part.length, 0);
+      const centralOffset = offset;
+      const end = concatBytes([
+        u32(0x06054b50), u16(0), u16(0), u16(central.length), u16(central.length),
+        u32(centralSize), u32(centralOffset), u16(0)
+      ]);
+      return concatBytes([...chunks, ...central, end]);
+    }
+
+    function u16(value) {
+      const bytes = new Uint8Array(2);
+      new DataView(bytes.buffer).setUint16(0, value, true);
+      return bytes;
+    }
+
+    function u32(value) {
+      const bytes = new Uint8Array(4);
+      new DataView(bytes.buffer).setUint32(0, value >>> 0, true);
+      return bytes;
+    }
+
+    function concatBytes(parts) {
+      const total = parts.reduce((sum, part) => sum + part.length, 0);
+      const output = new Uint8Array(total);
+      let offset = 0;
+      parts.forEach(part => {
+        output.set(part, offset);
+        offset += part.length;
+      });
+      return output;
+    }
+
+    function crc32(bytes) {
+      let crc = -1;
+      for (let i = 0; i < bytes.length; i++) {
+        crc = (crc >>> 8) ^ crcTable[(crc ^ bytes[i]) & 0xff];
+      }
+      return (crc ^ -1) >>> 0;
+    }
+
+    const crcTable = Array.from({ length: 256 }, (_, n) => {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      return c >>> 0;
+    });
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function todayStamp() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function renderAll() {
+      renderTabs();
+      renderStoreFilter();
+      renderMetrics();
+      renderForm();
+      renderTable();
+    }
+
+    tabsEl.addEventListener("click", event => {
+      const button = event.target.closest("button[data-store]");
+      if (!button) return;
+      state.activeStore = button.dataset.store;
+      if (state.storeView === "active") storeFilter.value = "active";
+      renderAll();
+    });
+
+    formEl.addEventListener("submit", addRecord);
+    tableWrap.addEventListener("focusout", editCell);
+    tableWrap.addEventListener("change", updateStatus);
+    tableWrap.addEventListener("click", deleteRow);
+    searchInput.addEventListener("input", event => {
+      state.query = normalize(event.target.value);
+      renderTable();
+    });
+    statusFilter.addEventListener("change", event => {
+      state.status = event.target.value;
+      renderTable();
+    });
+    storeFilter.addEventListener("change", event => {
+      state.storeView = event.target.value;
+      renderTable();
+    });
+    document.getElementById("exportXlsx").addEventListener("click", downloadXlsx);
+    document.getElementById("exportCsv").addEventListener("click", downloadCsv);
+    document.getElementById("resetData").addEventListener("click", resetData);
+
+    window.MythriApp = {
+      buildXlsxFiles,
+      createZip,
+      rowsFor,
+      state
+    };
+
+    renderAll();
+  </script>
+</body>
+</html>
